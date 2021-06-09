@@ -3,26 +3,24 @@ package tictactoe;
 import java.util.Scanner;
 
 public class Move {
-    static boolean move(Grid grid, char XO){
+    static boolean playerMove(Grid grid){
         boolean isContinue = true;
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the coordinates: ");
-        String[] coordinates = scanner.nextLine().split(" ");
+        String[] coordinates = scanner.nextLine().trim().split(" ");
         String check = "";
         check = checkCoordinates(parseCoordinates(coordinates));
         switch (check){
             case "notNumber":
+            case "oneParam":
                 System.out.println("You should enter numbers!");
                 break;
             case "outOfRange":
                 System.out.println("Coordinates should be from 1 to 3!");
                 break;
-            case "oneParam":
-                System.out.println("You should enter numbers!");
-                break;
             case "available":
                 if (chekMove(parseCoordinates(coordinates), grid)){
-                    makeMove(parseCoordinates(coordinates), grid, XO);
+                    makeMove(parseCoordinates(coordinates), grid, 'X');
                     isContinue = false;
                 }
                 else {
@@ -75,5 +73,7 @@ public class Move {
     static void makeMove(int[] coordinateToInt ,Grid grid, char XO){
         grid.setGrid(coordinateToInt, XO);
     }
+
+
 }
 

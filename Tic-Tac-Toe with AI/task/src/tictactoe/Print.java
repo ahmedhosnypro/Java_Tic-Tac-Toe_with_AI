@@ -2,6 +2,7 @@ package tictactoe;
 
 public class Print {
     static void printGrid(Grid grid){
+        System.out.println();
         System.out.println("---------");
         for (char[] row: grid.getGrid()){
             System.out.print("| ");
