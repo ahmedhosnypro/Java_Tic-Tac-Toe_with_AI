@@ -6,6 +6,7 @@ import static tictactoe.AIMove.*;
 import static tictactoe.Print.printGrid;
 
 public class Fight {
+    /*
     static void startFight(Grid grid) {
         OuterFor:
         for (int i = 0; i < 9; i++) {
@@ -28,8 +29,9 @@ public class Fight {
                         while (startAIMove(grid));
                         printGrid(grid);
                     }
-
             }
         }
     }
+
+     */
 }

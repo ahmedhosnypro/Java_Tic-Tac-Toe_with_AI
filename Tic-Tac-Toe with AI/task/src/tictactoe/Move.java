@@ -3,7 +3,7 @@ package tictactoe;
 import java.util.Scanner;
 
 public class Move {
-    static boolean playerMove(Grid grid){
+    static boolean playerMove(Grid grid, char XO){
         boolean isContinue = true;
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the coordinates: ");
@@ -20,7 +20,7 @@ public class Move {
                 break;
             case "available":
                 if (chekMove(parseCoordinates(coordinates), grid)){
-                    makeMove(parseCoordinates(coordinates), grid, 'X');
+                    makeMove(parseCoordinates(coordinates), grid, XO);
                     isContinue = false;
                 }
                 else {

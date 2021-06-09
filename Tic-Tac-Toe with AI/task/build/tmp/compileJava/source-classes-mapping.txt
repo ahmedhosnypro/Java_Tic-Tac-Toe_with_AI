@@ -1,14 +1,19 @@
-tictactoe/Move.java
- tictactoe.Move
+tictactoe/Print.java
+ tictactoe.Print
 tictactoe/Grid.java
  tictactoe.Grid
 tictactoe/GridState.java
  tictactoe.GridState
+tictactoe/Move.java
+ tictactoe.Move
 tictactoe/Fight.java
  tictactoe.Fight
-tictactoe/Main.java
- tictactoe.Main
 tictactoe/AIMove.java
  tictactoe.AIMove
-tictactoe/Print.java
- tictactoe.Print
+tictactoe/Command.java
+ tictactoe.Command
+tictactoe/Main.java
+ tictactoe.Main
+tictactoe/Game.java
+ tictactoe.Game
+ tictactoe.Game$1

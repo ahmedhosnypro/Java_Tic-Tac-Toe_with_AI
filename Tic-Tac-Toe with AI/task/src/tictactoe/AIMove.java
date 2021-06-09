@@ -8,7 +8,7 @@ import static tictactoe.Move.makeMove;
 
 
 public class AIMove {
-    static boolean startAIMove(Grid grid) {
+    static boolean startAIMove(Grid grid, char XO) {
         boolean isContinue = true;
         String level = "EASY";
         int[] cords = new int[2];
@@ -20,7 +20,7 @@ public class AIMove {
                 break;
         }
         if (chekMove(cords, grid)) {
-            makeMove(cords, grid, 'O');
+            makeMove(cords, grid, XO);
             isContinue = false;
         }
 
