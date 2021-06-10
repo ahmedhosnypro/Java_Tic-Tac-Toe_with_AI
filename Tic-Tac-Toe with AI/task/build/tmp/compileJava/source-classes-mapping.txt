@@ -4,12 +4,12 @@ tictactoe/Grid.java
  tictactoe.Grid
 tictactoe/Move.java
  tictactoe.Move
+tictactoe/GridState.java
+ tictactoe.GridState
 tictactoe/Player.java
  tictactoe.Player
 tictactoe/AIMove.java
  tictactoe.AIMove
-tictactoe/GridState.java
- tictactoe.GridState
 tictactoe/Main.java
  tictactoe.Main
 tictactoe/Game.java

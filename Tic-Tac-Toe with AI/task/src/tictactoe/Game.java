@@ -81,9 +81,14 @@ public class Game {
                         case MEDIUM:
                             medium(grid, i);
                             break;
+                        case HARD:
+                            hard(grid, i);
                         default:
                             break;
                     }
+            }
+            if (i == 8){
+                System.out.println(state(grid));
             }
         }
     }
@@ -117,6 +122,17 @@ public class Game {
             XO = 'O';
         }
         startAIMove(grid, XO, "MEDIUM");
+        printGrid(grid);
+    }
+
+    private static void hard(Grid grid, int i) {
+        char XO = ' ';
+        if (i % 2 == 0) {
+            XO = 'X';
+        } else {
+            XO = 'O';
+        }
+        startAIMove(grid, XO, "HARD");
         printGrid(grid);
     }
 }
