@@ -91,23 +91,24 @@ public class GridState {
         return check;
     }
 
-    static char[] simpleSides(Grid grid) {
-        char[][] sides = grid.getSides();
+    //return simple array representing full filled side with special case (X, O)
+    static char[] simplingSides(Grid grid) {
+        char[][] side = grid.getSides();
         char[] simpleSides = new char[grid.getSides().length];
-        Arrays.fill(simpleSides, 'A');
-        for (int i = 0; i < sides.length; i++) {
-            char last = sides[i][0];
+        Arrays.fill(simpleSides, 'f');
+        for (int i = 0; i < side.length; i++) {
+            char last = side[i][0];
             boolean isInRow = true;
             for (int j = 1; j < 3; j++) {
-                if (sides[i][j] == last) {
-                    last = sides[i][j];
+                if (side[i][j] == last) {
+                    last = side[i][j];
                 } else {
                     isInRow = false;
                     break;
                 }
             }
             if (isInRow) {
-                simpleSides[i] = sides[i][0];
+                simpleSides[i] = side[i][0];
             }
         }
         return simpleSides;
@@ -116,7 +117,7 @@ public class GridState {
     static String checkSides(Grid grid) {
         String check = "";
         char[] Sides = new char[8];
-        Sides = simpleSides(grid);
+        Sides = simplingSides(grid);
         int X = 0;
         int O = 0;
         for (int i = 0; i < Sides.length; i++) {
@@ -135,4 +136,6 @@ public class GridState {
         }
         return check;
     }
+
+
 }

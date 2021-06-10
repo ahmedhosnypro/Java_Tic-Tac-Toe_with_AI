@@ -760,6 +760,607 @@ files:
         }
     }
   learner_created: false
+- name: src/tictactoe/Move.java
+  visible: true
+  text: |+
+    package tictactoe;
+
+    import java.util.Scanner;
+
+    public class Move {
+        static boolean playerMove(Grid grid, char XO){
+            boolean isContinue = true;
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("Enter the coordinates: ");
+            String[] coordinates = scanner.nextLine().trim().split(" ");
+            String check = "";
+            check = checkCoordinates(parseCoordinates(coordinates));
+            switch (check){
+                case "notNumber":
+                case "oneParam":
+                    System.out.println("You should enter numbers!");
+                    break;
+                case "outOfRange":
+                    System.out.println("Coordinates should be from 1 to 3!");
+                    break;
+                case "available":
+                    if (chekMove(parseCoordinates(coordinates), grid)){
+                        makeMove(parseCoordinates(coordinates), grid, XO);
+                        isContinue = false;
+                    }
+                    else {
+                        System.out.println("This cell is occupied! Choose another one!");
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return isContinue;
+        }
+        static int[] parseCoordinates(String[] coordinates){
+            int[] coordinateToInt = new int[]{-1, -1};
+            if (coordinates.length == 2){
+                try {
+                    coordinateToInt[0] = Integer.parseInt(coordinates[0]) - 1;
+                    coordinateToInt[1] = Integer.parseInt(coordinates[1]) - 1;
+                }
+                catch (IllegalArgumentException ignored){
+                }
+            }
+            else {
+                coordinateToInt[0] = -2;
+                coordinateToInt[1] = -2;
+            }
+            return coordinateToInt;
+        }
+        static String checkCoordinates(int[] coordinateToInt){
+            String check = "";
+            for (int j : coordinateToInt) {
+                if (j == -1) {
+                    check = "notNumber";
+                    break;
+                }
+                else if (j == -2){
+                    check = "oneParam";
+                }
+                else if (j >= 0 && j < 3) {
+                    check = "available";
+                } else {
+                    check = "outOfRange";
+                    break;
+                }
+            }
+            return check;
+        }
+        static boolean chekMove(int[] coordinateToInt, Grid grid){
+            return grid.getGrid()[coordinateToInt[0]][coordinateToInt[1]] == ' ';
+        }
+        static void makeMove(int[] coordinateToInt ,Grid grid, char XO){
+            grid.setGrid(coordinateToInt, XO);
+        }
+
+
+    }
+
+  learner_created: true
+- name: src/tictactoe/Grid.java
+  visible: true
+  text: |
+    package tictactoe;
+
+    import java.util.Scanner;
+
+    public class Grid {
+        private char[][] grid = new char[3][3];
+        char[] diagonal1 = new char[3];
+        char[] diagonal2 = new char[3];
+        private char[][] rotatedGrid = new char[3][3];
+        private char[][] sides;
+
+
+        Grid() {
+            for (int i = 0; i < 3; i++){
+                for (int j = 0; j < 3; j++){
+                    grid[i][j] = ' ';
+                }
+            }
+            setRotatedGrid();
+            setDiagonal1();
+            setDiagonal2();
+            setSides();
+        }
+        boolean setGrid(String symbols) {
+            if (!symbols.matches("[^XO_]")){
+                if (symbols.length() == 9) {
+                    symbols = symbols.replaceAll("_", " ");
+                    int j = 0;
+                    for (int i = 0; i < 3; i++) {
+                        grid[0][i] = symbols.charAt(j);
+                        j++;
+                    }
+                    for (int i = 0; i < 3; i++) {
+                        grid[1][i] = symbols.charAt(j);
+                        j++;
+                    }
+                    for (int i = 0; i < 3; i++) {
+                        grid[2][i] = symbols.charAt(j);
+                        j++;
+                    }
+                    setRotatedGrid();
+                    setDiagonal1();
+                    setDiagonal2();
+                    setSides();
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
+
+        }
+        public void setGrid(char[][] grid) {
+            this.grid = grid;
+            setRotatedGrid();
+            setDiagonal1();
+            setDiagonal2();
+            setSides();
+        }
+        public void setGrid(int[] coordinates, char XO) {
+            grid[coordinates[0]][coordinates[1]] = XO;
+            setRotatedGrid();
+            setDiagonal1();
+            setDiagonal2();
+            setSides();
+        }
+        public char[][] getGrid() {
+            return grid;
+        }
+        void setRotatedGrid() {
+            for (int i = 0; i < 3; i++){
+                for (int k = 0; k < 3; k++){
+                    rotatedGrid[i][k] = grid[k][i];
+                }
+            }
+        }
+        void setDiagonal1() {
+            for (int i = 0; i < 3; i++){
+                diagonal1[i] = grid[i][i];
+            }
+        }
+        void setDiagonal2() {
+            diagonal2[0] = grid[0][2];
+            diagonal2[1] = grid[1][1];
+            diagonal2[2] = grid[2][0];
+        }
+        public void setSides() {
+            sides = new char[][]{grid[0], grid[1], grid[2], rotatedGrid[0], rotatedGrid[1], rotatedGrid[2],
+                    diagonal1, diagonal2};
+        }
+        public char[][] getSides() {
+            return sides;
+        }
+    }
+  learner_created: true
+- name: src/tictactoe/Player.java
+  visible: true
+  text: |
+    package tictactoe;
+
+    public enum Player {
+        EASY,
+        USER,
+        MEDIUM;
+    }
+  learner_created: true
+- name: src/tictactoe/Game.java
+  visible: true
+  text: |
+    package tictactoe;
+
+    import java.util.ArrayList;
+    import java.util.Arrays;
+    import java.util.Locale;
+    import java.util.Scanner;
+    import java.util.stream.Collectors;
+
+    import static tictactoe.AIMove.*;
+    import static tictactoe.GridState.*;
+    import static tictactoe.Move.*;
+    import static tictactoe.Print.*;
+
+    public class Game {
+        private static final Scanner scanner;
+
+        static {
+            scanner = new Scanner(System.in);
+        }
+
+        static void chooseCommand() {
+            System.out.print("Input command: > ");
+            ArrayList<String> input = Arrays
+                    .stream(scanner.nextLine().trim().split("\\s+"))
+                    .map(String::toUpperCase)
+                    .collect(Collectors.toCollection(ArrayList::new));
+            Player[] players = new Player[2];
+            if (input.size() > 0) {
+                switch (input.get(0)) {
+                    case "START":
+                        if (input.size() == 3) {
+                            try {
+                                players[0] = Player.valueOf(input.get(1));
+                                players[1] = Player.valueOf(input.get(2));
+                                Grid grid = new Grid();
+                                printGrid(grid);
+                                playing(players, grid);
+                            } catch (IllegalArgumentException e) {
+                                System.out.println("Bad parameters!");
+                                chooseCommand();
+                            }
+                        } else {
+                            System.out.println("Bad parameters!");
+                            chooseCommand();
+                        }
+                        break;
+                    case "EXIT":
+                        break;
+                    default:
+                        chooseCommand();
+                        break;
+                }
+            } else {
+                System.out.println("Bad parameters!");
+                chooseCommand();
+            }
+        }
+
+        private static void playing(Player[] players, Grid grid) {
+            OuterFor:
+            for (int i = 0; i < 9; i++) {
+                switch (state(grid)) {
+                    case "X wins":
+                        System.out.println("X wins");
+                        break OuterFor;
+                    case "O wins":
+                        System.out.println("O wins");
+                        break OuterFor;
+                    case "Draw":
+                        System.out.println("Draw");
+                        break OuterFor;
+                    default:
+                        int j = i % 2;
+                        switch (players[j]) {
+                            case EASY:
+                                easy(grid, i);
+                                break;
+                            case USER:
+                                user(grid, i);
+                                break;
+                            case MEDIUM:
+                                medium(grid, i);
+                                break;
+                            default:
+                                break;
+                        }
+                }
+            }
+        }
+
+        private static void easy(Grid grid, int i) {
+            char XO = ' ';
+            if (i % 2 == 0)
+                XO = 'X';
+            else
+                XO = 'O';
+            startAIMove(grid, XO, "EASY");
+            printGrid(grid);
+        }
+
+        private static void user(Grid grid, int i) {
+            char XO = ' ';
+            if (i % 2 == 0) {
+                XO = 'X';
+            } else {
+                XO = 'O';
+            }
+            while (playerMove(grid, XO)) ;
+            printGrid(grid);
+        }
+
+        private static void medium(Grid grid, int i) {
+            char XO = ' ';
+            if (i % 2 == 0) {
+                XO = 'X';
+            } else {
+                XO = 'O';
+            }
+            startAIMove(grid, XO, "MEDIUM");
+            printGrid(grid);
+        }
+    }
+  learner_created: true
+- name: src/tictactoe/Print.java
+  visible: true
+  text: |
+    package tictactoe;
+
+    public class Print {
+        static void printGrid(Grid grid){
+            System.out.println();
+            System.out.println("---------");
+            for (char[] row: grid.getGrid()){
+                System.out.print("| ");
+                for (char ch: row){
+                    System.out.print(ch + " ");
+                }
+                System.out.println("|");
+            }
+            System.out.println("---------");
+        }
+    }
+  learner_created: true
+- name: src/tictactoe/AIMove.java
+  visible: true
+  text: |
+    package tictactoe;
+
+    import java.util.Random;
+    import java.util.Scanner;
+
+    import static tictactoe.Move.chekMove;
+    import static tictactoe.Move.makeMove;
+
+
+    public class AIMove {
+        static void startAIMove(Grid grid, char XO, String level) {
+            int[] cord = new int[2];
+            switch (level) {
+                case "EASY":
+                    while (easyMove(grid, XO)) ;
+                    break;
+                case "MEDIUM":
+                    while (mediumMove(grid, XO)) ;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        static boolean easyMove(Grid grid, char XO) {
+            boolean isContinue = true;
+            System.out.print("Making move level \"easy\"");
+            int[] cord = easyMoveCord(grid);
+            if (chekMove(cord, grid)) {
+                makeMove(cord, grid, XO);
+                isContinue = false;
+            }
+            return isContinue;
+        }
+
+        static boolean mediumMove(Grid grid, char XO) {
+            boolean isContinue = true;
+            System.out.print("Making move level \"medium\"");
+            int[] cord = mediumMoveCord(grid, XO);
+            if (chekMove(cord, grid)) {
+                makeMove(cord, grid, XO);
+                isContinue = false;
+            }
+            return isContinue;
+        }
+
+        static int[] easyMoveCord(Grid grid) {
+            Random random = new Random();
+            return new int[]{random.nextInt(3), random.nextInt(3)};
+        }
+
+        static int[] mediumMoveCord(Grid grid, char currentTurnXO) {
+            int[] cord = {-1, -1};
+            char[][] side = grid.getSides();
+            OUTER:
+            for (int i = 0; i < side.length; i++) {
+                int X = 0, Y = 0;
+                for (int j = 0; j < 3; j++) {
+                    if (side[i][j] == 'X') {
+                        X++;
+                    } else if (side[i][j] == 'Y') {
+                        Y++;
+                    }
+                    if ((X == 2 && currentTurnXO == 'O') || (Y == 2 && currentTurnXO == 'X')) {
+                        for (int k = 0; k < 3; k++) {
+                            if (side[i][k] == ' ') {
+                                int x = -1;
+                                int y = -1;
+                                switch (i){
+                                    case 0:
+                                    case 1:
+                                    case 2:
+                                        x = i;
+                                        y = k;
+                                        break;
+                                    case 3:
+                                    case 4:
+                                    case 5:
+                                        x = k;
+                                        y = i - 3;
+                                        break;
+                                    case 6:
+                                        x = k;
+                                        y = k;
+                                        break;
+                                    case 7:
+                                        if (k == 0){
+                                            x = 0;
+                                            y = 2;
+                                        }
+                                        else if (k == 1){
+                                            x = 1;
+                                            y = 1;
+                                        }
+                                        else {
+                                            x = 2;
+                                            y = 0;
+                                        }
+                                        break;
+                                }
+                                cord[0] = x;
+                                cord[1] = y;
+                                break OUTER;
+                            }
+                        }
+                    }
+                }
+            }
+            if (cord[0] == -1) {
+                cord = easyMoveCord(grid);
+            }
+
+            return cord;
+        }
+    }
+  learner_created: true
+- name: src/tictactoe/GridState.java
+  visible: true
+  text: |
+    package tictactoe;
+
+    import java.util.Arrays;
+
+    public class GridState {
+        static String state(Grid grid) {
+            String check = "";
+            int X = 0;
+            int O = 0;
+            int empty = 0;
+            for (char[] row : grid.getGrid()) {
+                for (char ch : row) {
+                    if (ch == 'X') {
+                        X++;
+                    } else if (ch == 'O') {
+                        O++;
+                    } else if (ch == ' ') {
+                        empty++;
+                    }
+                }
+            }
+
+            if (Math.abs(X - O) > 1) {
+                check = "Impossible";
+            } else {
+                switch (checkSides(grid)) {
+                    case "Impossible":
+                        check = "Impossible";
+                        break;
+                    case "X wins":
+                        check = "X wins";
+                        break;
+                    case "O wins":
+                        check = "O wins";
+                        break;
+                    default:
+                        if (empty == 0) {
+                            check = "Draw";
+                        } else if (empty > 0) {
+                            if (X <= O){
+                                check = "Xstart";
+                            }else {
+                                check = "Ostart";
+                            }
+                        }
+                        break;
+                }
+            }
+            return check;
+        }
+
+        static String stateF(Grid grid) {
+            String check = "";
+            int X = 0;
+            int O = 0;
+            int empty = 0;
+            for (char[] row : grid.getGrid()) {
+                for (char ch : row) {
+                    if (ch == 'X') {
+                        X++;
+                    } else if (ch == 'O') {
+                        O++;
+                    } else if (ch == ' ') {
+                        empty++;
+                    }
+                }
+            }
+
+            if (Math.abs(X - O) > 1) {
+                check = "Impossible";
+            } else {
+                switch (checkSides(grid)) {
+                    case "Impossible":
+                        check = "Impossible";
+                        break;
+                    case "X wins":
+                        check = "X wins";
+                        break;
+                    case "O wins":
+                        check = "O wins";
+                        break;
+                    default:
+                        if (empty == 0) {
+                            check = "Draw";
+                        } else if (empty > 0) {
+                            check = "Game not finished";
+                        }
+                        break;
+                }
+            }
+            return check;
+        }
+
+        //return simple array representing full filled side with special case (X, O)
+        static char[] simplingSides(Grid grid) {
+            char[][] side = grid.getSides();
+            char[] simpleSides = new char[grid.getSides().length];
+            Arrays.fill(simpleSides, 'f');
+            for (int i = 0; i < side.length; i++) {
+                char last = side[i][0];
+                boolean isInRow = true;
+                for (int j = 1; j < 3; j++) {
+                    if (side[i][j] == last) {
+                        last = side[i][j];
+                    } else {
+                        isInRow = false;
+                        break;
+                    }
+                }
+                if (isInRow) {
+                    simpleSides[i] = side[i][0];
+                }
+            }
+            return simpleSides;
+        }
+
+        static String checkSides(Grid grid) {
+            String check = "";
+            char[] Sides = new char[8];
+            Sides = simplingSides(grid);
+            int X = 0;
+            int O = 0;
+            for (int i = 0; i < Sides.length; i++) {
+                if (Sides[i] == 'X') {
+                    X++;
+                } else if (Sides[i] == 'O') {
+                    O++;
+                }
+            }
+            if ((X > 0 && O > 0)) {
+                check = "Impossible";
+            } else if (X == 1 && O == 0) {
+                check = "X wins";
+            } else if (O == 1 && X == 0) {
+                check = "O wins";
+            }
+            return check;
+        }
+
+
+    }
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/81/stages/451/implement#comment
 status: Unchecked
-record: -1
+record: 5
