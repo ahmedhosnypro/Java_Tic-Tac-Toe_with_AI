@@ -8,7 +8,7 @@ import static tictactoe.Move.makeMove;
 
 
 public class AIMove {
-    static void startAIMove(Grid grid, char XO, String level) {
+    static void startAIMove(Grid grid, char XO, String level, int t) {
         int[] cord = new int[2];
         System.out.print("Making move level \"" + level + "\"");
         switch (level) {
@@ -19,7 +19,7 @@ public class AIMove {
                 while (mediumMove(grid, XO));
                 break;
             case "HARD":
-                while (hardMove(grid, XO));
+                while (hardMove(grid, XO, t));
             default:
                 break;
         }
@@ -46,9 +46,13 @@ public class AIMove {
         return isContinue;
     }
 
-    static boolean hardMove(Grid grid, char XO) {
+    static boolean hardMove(Grid grid, char XO, int t) {
         boolean isContinue = true;
-        int[] cord = hardMoveCord(grid, XO);
+        int[] cord;
+        if (t == 0){
+            cord = new int[]{2, 0};
+        }
+        else cord = hardMoveCord(grid, XO);
         if (chekMove(cord, grid)) {
             makeMove(cord, grid, XO);
             isContinue = false;
@@ -133,7 +137,7 @@ public class AIMove {
             for (int j = 0; j < 3; j++) {
                 if (side[i][j] == 'X') {
                     X++;
-                } else if (side[i][j] == 'Y') {
+                } else if (side[i][j] == 'O') {
                     O++;
                 }
                 if ((X == 0 && O == 2 && currentTurnXO == 'X') || (O == 0 && X == 2 && currentTurnXO == 'O')) {
@@ -189,7 +193,7 @@ public class AIMove {
                 for (int j = 0; j < 3; j++) {
                     if (side[i][j] == 'X') {
                         X++;
-                    } else if (side[i][j] == 'Y') {
+                    } else if (side[i][j] == 'O') {
                         O++;
                     }
                     if ((X == 0 && O == 1 && currentTurnXO == 'X') || (O == 0 && X == 1 && currentTurnXO == 'O')) {
@@ -245,7 +249,7 @@ public class AIMove {
                 for (int j = 0; j < 3; j++) {
                     if (side[i][j] == 'X') {
                         X++;
-                    } else if (side[i][j] == 'Y') {
+                    } else if (side[i][j] == 'O') {
                         O++;
                     }
                     if ((X == 2 && currentTurnXO == 'O') || (O == 2 && currentTurnXO == 'X')) {

@@ -99,7 +99,7 @@ public class Game {
             XO = 'X';
         else
             XO = 'O';
-        startAIMove(grid, XO, "EASY");
+        startAIMove(grid, XO, "EASY", i);
         printGrid(grid);
     }
 
@@ -121,7 +121,7 @@ public class Game {
         } else {
             XO = 'O';
         }
-        startAIMove(grid, XO, "MEDIUM");
+        startAIMove(grid, XO, "MEDIUM", i);
         printGrid(grid);
     }
 
@@ -132,7 +132,7 @@ public class Game {
         } else {
             XO = 'O';
         }
-        startAIMove(grid, XO, "HARD");
+        startAIMove(grid, XO, "HARD", i);
         printGrid(grid);
     }
 }
