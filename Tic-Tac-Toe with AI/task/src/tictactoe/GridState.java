@@ -37,9 +37,9 @@ public class GridState {
                     if (empty == 0) {
                         check = "Draw";
                     } else if (empty > 0) {
-                        if (X <= O){
+                        if (X <= O) {
                             check = "Xstart";
-                        }else {
+                        } else {
                             check = "Ostart";
                         }
                     }
@@ -136,6 +136,4 @@ public class GridState {
         }
         return check;
     }
-
-
 }

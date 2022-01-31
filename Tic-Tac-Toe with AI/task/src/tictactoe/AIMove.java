@@ -1,7 +1,6 @@
 package tictactoe;
 
 import java.util.Random;
-import java.util.Scanner;
 
 import static tictactoe.Move.chekMove;
 import static tictactoe.Move.makeMove;
@@ -13,13 +12,13 @@ public class AIMove {
         System.out.print("Making move level \"" + level + "\"");
         switch (level) {
             case "EASY":
-                while (easyMove(grid, XO));
+                while (easyMove(grid, XO)) ;
                 break;
             case "MEDIUM":
-                while (mediumMove(grid, XO));
+                while (mediumMove(grid, XO)) ;
                 break;
             case "HARD":
-                while (hardMove(grid, XO, t));
+                while (hardMove(grid, XO, t)) ;
             default:
                 break;
         }
@@ -49,10 +48,9 @@ public class AIMove {
     static boolean hardMove(Grid grid, char XO, int t) {
         boolean isContinue = true;
         int[] cord;
-        if (t == 0){
+        if (t == 0) {
             cord = new int[]{2, 0};
-        }
-        else cord = hardMoveCord(grid, XO);
+        } else cord = hardMoveCord(grid, XO);
         if (chekMove(cord, grid)) {
             makeMove(cord, grid, XO);
             isContinue = false;
@@ -132,7 +130,7 @@ public class AIMove {
         char[][] side = grid.getSides();
 
         OUTER:
-        for (int i = side.length -1 ; i >= 0; i--) {
+        for (int i = side.length - 1; i >= 0; i--) {
             int X = 0, O = 0;
             for (int j = 0; j < 3; j++) {
                 if (side[i][j] == 'X') {
@@ -185,10 +183,9 @@ public class AIMove {
         }
 
 
-
-        if (cord[0] == -1){
+        if (cord[0] == -1) {
             OUTER:
-            for (int i = side.length -1 ; i >= 0; i--) {
+            for (int i = side.length - 1; i >= 0; i--) {
                 int X = 0, O = 0;
                 for (int j = 0; j < 3; j++) {
                     if (side[i][j] == 'X') {
@@ -242,9 +239,9 @@ public class AIMove {
             }
         }
 
-        if (cord[0] == -1){
+        if (cord[0] == -1) {
             OUTER:
-            for (int i = side.length -1 ; i >= 0; i--) {
+            for (int i = side.length - 1; i >= 0; i--) {
                 int X = 0, O = 0;
                 for (int j = 0; j < 3; j++) {
                     if (side[i][j] == 'X') {

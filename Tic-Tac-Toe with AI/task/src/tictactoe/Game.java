@@ -2,7 +2,6 @@ package tictactoe;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -87,7 +86,7 @@ public class Game {
                             break;
                     }
             }
-            if (i == 8){
+            if (i == 8) {
                 System.out.println(state(grid));
             }
         }

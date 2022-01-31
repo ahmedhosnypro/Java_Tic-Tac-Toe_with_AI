@@ -68,7 +68,7 @@ public class TicTacToeTest extends StageTest<String> {
                 "Correct grid:\n" + correctGridAfterMove);
         }
 
-        if (!output.toLowerCase().contains("making move level \"easy\"")) {
+        if (!output.toLowerCase().replace("'", "\"").contains("making move level \"easy\"")) {
             return CheckResult.wrong("After entering a cell coordinates you should print:\nMaking move level \"easy\"");
         }
 

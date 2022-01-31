@@ -1,7 +1,5 @@
 package tictactoe;
 
-import java.util.Scanner;
-
 public class Grid {
     private char[][] grid = new char[3][3];
     char[] diagonal1 = new char[3];
@@ -11,8 +9,8 @@ public class Grid {
 
 
     Grid() {
-        for (int i = 0; i < 3; i++){
-            for (int j = 0; j < 3; j++){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
                 grid[i][j] = ' ';
             }
         }
@@ -21,8 +19,9 @@ public class Grid {
         setDiagonal2();
         setSides();
     }
+
     boolean setGrid(String symbols) {
-        if (!symbols.matches("[^XO_]")){
+        if (!symbols.matches("[^XO_]")) {
             if (symbols.length() == 9) {
                 symbols = symbols.replaceAll("_", " ");
                 int j = 0;
@@ -43,12 +42,11 @@ public class Grid {
                 setDiagonal2();
                 setSides();
                 return true;
-            }
-            else return false;
-        }
-        else return false;
+            } else return false;
+        } else return false;
 
     }
+
     public void setGrid(char[][] grid) {
         this.grid = grid;
         setRotatedGrid();
@@ -56,6 +54,7 @@ public class Grid {
         setDiagonal2();
         setSides();
     }
+
     public void setGrid(int[] coordinates, char XO) {
         grid[coordinates[0]][coordinates[1]] = XO;
         setRotatedGrid();
@@ -63,30 +62,36 @@ public class Grid {
         setDiagonal2();
         setSides();
     }
+
     public char[][] getGrid() {
         return grid;
     }
+
     void setRotatedGrid() {
-        for (int i = 0; i < 3; i++){
-            for (int k = 0; k < 3; k++){
+        for (int i = 0; i < 3; i++) {
+            for (int k = 0; k < 3; k++) {
                 rotatedGrid[i][k] = grid[k][i];
             }
         }
     }
+
     void setDiagonal1() {
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             diagonal1[i] = grid[i][i];
         }
     }
+
     void setDiagonal2() {
         diagonal2[0] = grid[0][2];
         diagonal2[1] = grid[1][1];
         diagonal2[2] = grid[2][0];
     }
+
     public void setSides() {
         sides = new char[][]{grid[0], grid[1], grid[2], rotatedGrid[0], rotatedGrid[1], rotatedGrid[2],
                 diagonal1, diagonal2};
     }
+
     public char[][] getSides() {
         return sides;
     }

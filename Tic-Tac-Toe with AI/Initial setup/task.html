@@ -1,4 +1,4 @@
-<h2 style="text-align: center;">Description</h2>
+<h5 style="text-align: center;">Description</h5>
 
 <p>In this project, you'll write a game called Tic-Tac-Toe that you can play against your computer. The computer will have three levels of difficulty — easy, medium, and hard.</p>
 
@@ -12,11 +12,11 @@
 
 <p>The program should ask the user to enter the coordinates of the cell where they want to make a move.</p>
 
-<p>Keep in mind that the first coordinate goes from left to right, and the second coordinate goes from top to bottom. Also, notice that coordinates start with 1 and can be 1, 2, or 3.</p>
+<p>Keep in mind that the first coordinate goes from top to bottom, and the second coordinate goes from left to right. Also, notice that coordinates start with 1 and can be 1, 2, or 3.</p>
 
 <p>But what if the user attempts to enter invalid coordinates? This could happen if they try to enter letters or symbols instead of numbers, or the coordinates of an already occupied cell. Your program needs to prevent these things from happening by checking the user's input and catching possible exceptions.</p>
 
-<h2 style="text-align: center;">Objectives</h2>
+<h5 style="text-align: center;">Objectives</h5>
 
 <p>The program should work in the following way:</p>
 
@@ -38,15 +38,13 @@
 <ul>
 	<li><code class="java">Game not finished</code> — when no side has three in a row, but the table still has empty cells;</li>
 	<li><code class="java">Draw</code> — when no side has three in a row, and the table is complete;</li>
-	<li><code class="java">X wins</code> — when there are three <code class="java">X</code>'s in a row;</li>
-	<li><code class="java">O wins</code> — when there are three <code class="java">O</code>'s in a row.</li>
+	<li><code class="java">X wins</code> — when there are three <code class="java">X</code>'s in a row (up, down, across, or diagonally);</li>
+	<li><code class="java">O wins</code> — when there are three <code class="java">O</code>'s in a row (up, down, across, or diagonally).</li>
 </ul>
 
 <p>If the user provides invalid coordinates, the program should repeat the request until numbers that represent an empty cell on the table are supplied. You should ensure that the program only outputs the table twice — before the move and after the user makes a legal move.</p>
 
-<p><div class="alert alert-warning">The project was changed. Now the coordinates start from the upper left corner. Look closely at the examples.</div></p>
-
-<h2 style="text-align: center;">Examples</h2>
+<h5 style="text-align: center;">Examples</h5>
 
 <p>The examples below show how your program should work.<br>
 The greater-than symbol followed by a space (<code class="java">&gt; </code>) represents the user input. Note that it's not part of the input.</p>

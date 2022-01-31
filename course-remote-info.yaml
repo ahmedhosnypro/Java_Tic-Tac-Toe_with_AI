@@ -3,7 +3,7 @@ hyperskill_project:
   ide_files: https://stepik.org/media/attachments/lesson/262721/additional_files.json
   is_template_based: false
   use_ide: true
-update_date: Fri, 11 Jun 2021 05:33:47 UTC
+update_date: Mon, 31 Jan 2022 09:10:42 UTC
 stages:
 - id: 447
   step: 7434
@@ -22,6 +22,8 @@ stages:
   is_completed: true
 topics:
   0:
+  - title: Write, compile, and run
+    theory_id: 3739
   - title: Units of information
     theory_id: 6865
   - title: Introduction to Java
@@ -34,6 +36,10 @@ topics:
     theory_id: 3749
   - title: Types and variables
     theory_id: 3518
+  - title: Sizes and ranges
+    theory_id: 3532
+  - title: Type casting
+    theory_id: 3510
   - title: Comments
     theory_id: 3520
   - title: Coding style conventions
@@ -66,14 +72,6 @@ topics:
     theory_id: 3507
   - title: Switch statement
     theory_id: 3504
-  - title: Write, compile, and run
-    theory_id: 3739
-  - title: Errors in programs
-    theory_id: 3536
-  - title: Sizes and ranges
-    theory_id: 3532
-  - title: Type casting
-    theory_id: 3510
   - title: Calling a method
     theory_id: 10973
   - title: Primitive and reference types
@@ -86,6 +84,8 @@ topics:
     theory_id: 1933
   - title: String
     theory_id: 3523
+  - title: Errors in programs
+    theory_id: 3536
   1:
   - title: IDE
     theory_id: 10996
@@ -114,12 +114,12 @@ topics:
   2:
   - title: Arrays as parameters
     theory_id: 3594
+  - title: Package
+    theory_id: 3621
   - title: Constructor
     theory_id: 3535
   - title: Instance methods
     theory_id: 3495
-  - title: Package
-    theory_id: 3621
   - title: Access modifiers
     theory_id: 3589
   - title: Getters and setters
@@ -131,33 +131,35 @@ topics:
     theory_id: 7427
   - title: Multiple constructors
     theory_id: 3538
-  - title: Inheritance
-    theory_id: 3583
-  - title: The keyword super
-    theory_id: 3588
   - title: Annotations basics
     theory_id: 3622
   - title: Static members
     theory_id: 3534
+  - title: Inheritance
+    theory_id: 3583
+  - title: The keyword super
+    theory_id: 3588
   - title: Hiding and overriding
     theory_id: 3572
   - title: Covariant return types
     theory_id: 3539
   4:
   - title: Computer algorithms
-    theory_id: 4953
+    theory_id: 16547
   - title: The big O notation
-    theory_id: 4991
+    theory_id: 16699
   - title: Data structures
-    theory_id: 5161
-  - title: Stack
-    theory_id: 5252
+    theory_id: 16927
   - title: Recursion basics
     theory_id: 5984
+  - title: Stack
+    theory_id: 5252
   - title: Call stack
     theory_id: 5135
   - title: Recursion
     theory_id: 3550
+  - title: Interface
+    theory_id: 3615
   - title: Protected modifier
     theory_id: 6692
   - title: Referencing subclass objects
@@ -166,5 +168,3 @@ topics:
     theory_id: 3587
   - title: Abstract class
     theory_id: 3597
-  - title: Interface
-    theory_id: 3615
