@@ -600,7 +600,7 @@ files:
 - name: src/tictactoe/AIMove.java
   visible: true
   learner_created: true
-feedback_link: https://hyperskill.org/projects/81/stages/448/implement#comment
+feedback_link: https://hyperskill.org/learn/step/7435#comment
 status: Solved
 feedback:
   message: Congratulations!

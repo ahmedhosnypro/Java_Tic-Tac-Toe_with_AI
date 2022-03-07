@@ -1,6 +1,6 @@
 package tictactoe;
 
-public enum Player {
+public enum PlayerLevel {
     EASY,
     USER,
     MEDIUM,

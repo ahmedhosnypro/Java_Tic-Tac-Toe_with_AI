@@ -3,44 +3,54 @@ package tictactoe;
 import java.util.Arrays;
 
 public class GridState {
+    private GridState() {
+        throw new IllegalStateException("GridState class");
+    }
+
+    private static final String impossible = "Impossible";
+    private static final String xWins = "X wins";
+    private static final String oWins = "O wins";
+    private static final String xTurn = "xStart";
+    private static final String oTurn = "oStart";
+
     static String state(Grid grid) {
         String check = "";
-        int X = 0;
-        int O = 0;
+        int xCnt = 0;
+        int oCnt = 0;
         int empty = 0;
         for (char[] row : grid.getGrid()) {
             for (char ch : row) {
                 if (ch == 'X') {
-                    X++;
+                    xCnt++;
                 } else if (ch == 'O') {
-                    O++;
+                    oCnt++;
                 } else if (ch == ' ') {
                     empty++;
                 }
             }
         }
 
-        if (Math.abs(X - O) > 1) {
-            check = "Impossible";
+        if (Math.abs(xCnt - oCnt) > 1) {
+            check = impossible;
         } else {
             switch (checkSides(grid)) {
-                case "Impossible":
-                    check = "Impossible";
+                case impossible:
+                    check = impossible;
                     break;
-                case "X wins":
-                    check = "X wins";
+                case xWins:
+                    check = xWins;
                     break;
-                case "O wins":
-                    check = "O wins";
+                case oWins:
+                    check = oWins;
                     break;
                 default:
                     if (empty == 0) {
                         check = "Draw";
                     } else if (empty > 0) {
-                        if (X <= O) {
-                            check = "Xstart";
+                        if (xCnt <= oCnt) {
+                            check = xTurn;
                         } else {
-                            check = "Ostart";
+                            check = oTurn;
                         }
                     }
                     break;
@@ -49,50 +59,8 @@ public class GridState {
         return check;
     }
 
-    static String stateF(Grid grid) {
-        String check = "";
-        int X = 0;
-        int O = 0;
-        int empty = 0;
-        for (char[] row : grid.getGrid()) {
-            for (char ch : row) {
-                if (ch == 'X') {
-                    X++;
-                } else if (ch == 'O') {
-                    O++;
-                } else if (ch == ' ') {
-                    empty++;
-                }
-            }
-        }
-
-        if (Math.abs(X - O) > 1) {
-            check = "Impossible";
-        } else {
-            switch (checkSides(grid)) {
-                case "Impossible":
-                    check = "Impossible";
-                    break;
-                case "X wins":
-                    check = "X wins";
-                    break;
-                case "O wins":
-                    check = "O wins";
-                    break;
-                default:
-                    if (empty == 0) {
-                        check = "Draw";
-                    } else if (empty > 0) {
-                        check = "Game not finished";
-                    }
-                    break;
-            }
-        }
-        return check;
-    }
-
-    //return simple array representing full filled side with special case (X, O)
-    static char[] simplingSides(Grid grid) {
+    //return simple array representing fulfilled side with special case (X, O)
+    static char[] simplifySides(Grid grid) {
         char[][] side = grid.getSides();
         char[] simpleSides = new char[grid.getSides().length];
         Arrays.fill(simpleSides, 'f');
@@ -116,23 +84,23 @@ public class GridState {
 
     static String checkSides(Grid grid) {
         String check = "";
-        char[] Sides = new char[8];
-        Sides = simplingSides(grid);
-        int X = 0;
-        int O = 0;
-        for (int i = 0; i < Sides.length; i++) {
-            if (Sides[i] == 'X') {
-                X++;
-            } else if (Sides[i] == 'O') {
-                O++;
+        char[] sides;
+        sides = simplifySides(grid);
+        int xCnt = 0;
+        int oCnt = 0;
+        for (char side : sides) {
+            if (side == 'X') {
+                xCnt++;
+            } else if (side == 'O') {
+                oCnt++;
             }
         }
-        if ((X > 0 && O > 0)) {
-            check = "Impossible";
-        } else if (X == 1 && O == 0) {
-            check = "X wins";
-        } else if (O == 1 && X == 0) {
-            check = "O wins";
+        if ((xCnt > 0 && oCnt > 0)) {
+            check = impossible;
+        } else if (xCnt == 1 && oCnt == 0) {
+            check = xWins;
+        } else if (oCnt == 1 && xCnt == 0) {
+            check = oWins;
         }
         return check;
     }

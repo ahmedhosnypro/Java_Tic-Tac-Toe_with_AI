@@ -3,12 +3,16 @@ package tictactoe;
 import java.util.Scanner;
 
 public class Move {
-    static boolean playerMove(Grid grid, char XO) {
+    private Move() {
+        throw new IllegalStateException("Move class");
+    }
+
+    static boolean playerMove(Grid grid, char currentTurnXO) {
         boolean isContinue = true;
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter the coordinates: ");
         String[] coordinates = scanner.nextLine().trim().split(" ");
-        String check = "";
+        String check;
         check = checkCoordinates(parseCoordinates(coordinates));
         switch (check) {
             case "notNumber":
@@ -20,7 +24,7 @@ public class Move {
                 break;
             case "available":
                 if (chekMove(parseCoordinates(coordinates), grid)) {
-                    makeMove(parseCoordinates(coordinates), grid, XO);
+                    makeMove(parseCoordinates(coordinates), grid, currentTurnXO);
                     isContinue = false;
                 } else {
                     System.out.println("This cell is occupied! Choose another one!");
@@ -69,7 +73,7 @@ public class Move {
         return grid.getGrid()[coordinateToInt[0]][coordinateToInt[1]] == ' ';
     }
 
-    static void makeMove(int[] coordinateToInt, Grid grid, char XO) {
-        grid.setGrid(coordinateToInt, XO);
+    static void makeMove(int[] coordinateToInt, Grid grid, char currentTurnXO) {
+        grid.setGrid(coordinateToInt, currentTurnXO);
     }
 }

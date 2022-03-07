@@ -118,7 +118,7 @@ files:
 - name: src/tictactoe/Print.java
   visible: true
   learner_created: true
-feedback_link: https://hyperskill.org/projects/81/stages/447/implement#comment
+feedback_link: https://hyperskill.org/learn/step/7434#comment
 status: Solved
 feedback:
   message: Congratulations!

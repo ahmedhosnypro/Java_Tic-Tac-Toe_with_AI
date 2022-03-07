@@ -2,9 +2,9 @@ package tictactoe;
 
 public class Grid {
     private char[][] grid = new char[3][3];
-    char[] diagonal1 = new char[3];
-    char[] diagonal2 = new char[3];
-    private char[][] rotatedGrid = new char[3][3];
+    char[] mainDiagonal = new char[3];
+    char[] sideDiagonal = new char[3];
+    private final char[][] rotatedGrid = new char[3][3];
     private char[][] sides;
 
 
@@ -77,19 +77,20 @@ public class Grid {
 
     void setDiagonal1() {
         for (int i = 0; i < 3; i++) {
-            diagonal1[i] = grid[i][i];
+            mainDiagonal[i] = grid[i][i];
         }
     }
 
     void setDiagonal2() {
-        diagonal2[0] = grid[0][2];
-        diagonal2[1] = grid[1][1];
-        diagonal2[2] = grid[2][0];
+        sideDiagonal[0] = grid[0][2];
+        sideDiagonal[1] = grid[1][1];
+        sideDiagonal[2] = grid[2][0];
     }
 
     public void setSides() {
-        sides = new char[][]{grid[0], grid[1], grid[2], rotatedGrid[0], rotatedGrid[1], rotatedGrid[2],
-                diagonal1, diagonal2};
+        sides = new char[][]{mainDiagonal, sideDiagonal, grid[0],
+                grid[1], grid[2], rotatedGrid[0], rotatedGrid[1],
+                rotatedGrid[2]};
     }
 
     public char[][] getSides() {

@@ -11,6 +11,11 @@ import static tictactoe.Move.*;
 import static tictactoe.Print.*;
 
 public class Game {
+    private Game() {
+        throw new IllegalStateException("Game class");
+    }
+
+    static final String badParameters = "Bad parameters!";
     private static final Scanner scanner;
 
     static {
@@ -23,23 +28,23 @@ public class Game {
                 .stream(scanner.nextLine().trim().split("\\s+"))
                 .map(String::toUpperCase)
                 .collect(Collectors.toCollection(ArrayList::new));
-        Player[] players = new Player[2];
-        if (input.size() > 0) {
+        PlayerLevel[] players = new PlayerLevel[2];
+        if (!input.isEmpty()) {
             switch (input.get(0)) {
                 case "START":
                     if (input.size() == 3) {
                         try {
-                            players[0] = Player.valueOf(input.get(1));
-                            players[1] = Player.valueOf(input.get(2));
+                            players[0] = PlayerLevel.valueOf(input.get(1));
+                            players[1] = PlayerLevel.valueOf(input.get(2));
                             Grid grid = new Grid();
                             printGrid(grid);
                             playing(players, grid);
                         } catch (IllegalArgumentException e) {
-                            System.out.println("Bad parameters!");
+                            System.out.println(badParameters);
                             chooseCommand();
                         }
                     } else {
-                        System.out.println("Bad parameters!");
+                        System.out.println(badParameters);
                         chooseCommand();
                     }
                     break;
@@ -50,12 +55,12 @@ public class Game {
                     break;
             }
         } else {
-            System.out.println("Bad parameters!");
+            System.out.println(badParameters);
             chooseCommand();
         }
     }
 
-    private static void playing(Player[] players, Grid grid) {
+    private static void playing(PlayerLevel[] players, Grid grid) {
         OuterFor:
         for (int i = 0; i < 9; i++) {
             switch (state(grid)) {
@@ -82,6 +87,7 @@ public class Game {
                             break;
                         case HARD:
                             hard(grid, i);
+                            break;
                         default:
                             break;
                     }
@@ -93,45 +99,45 @@ public class Game {
     }
 
     private static void easy(Grid grid, int i) {
-        char XO = ' ';
+        char currentTurnXO;
         if (i % 2 == 0)
-            XO = 'X';
+            currentTurnXO = 'X';
         else
-            XO = 'O';
-        startAIMove(grid, XO, "EASY", i);
+            currentTurnXO = 'O';
+        startAIMove(grid, currentTurnXO, "EASY");
         printGrid(grid);
     }
 
     private static void user(Grid grid, int i) {
-        char XO = ' ';
+        char currentTurnXO;
         if (i % 2 == 0) {
-            XO = 'X';
+            currentTurnXO = 'X';
         } else {
-            XO = 'O';
+            currentTurnXO = 'O';
         }
-        while (playerMove(grid, XO)) ;
+        while (playerMove(grid, currentTurnXO)) ;
         printGrid(grid);
     }
 
     private static void medium(Grid grid, int i) {
-        char XO = ' ';
+        char currentTurnXO;
         if (i % 2 == 0) {
-            XO = 'X';
+            currentTurnXO = 'X';
         } else {
-            XO = 'O';
+            currentTurnXO = 'O';
         }
-        startAIMove(grid, XO, "MEDIUM", i);
+        startAIMove(grid, currentTurnXO, "MEDIUM");
         printGrid(grid);
     }
 
     private static void hard(Grid grid, int i) {
-        char XO = ' ';
+        char currentTurnXO;
         if (i % 2 == 0) {
-            XO = 'X';
+            currentTurnXO = 'X';
         } else {
-            XO = 'O';
+            currentTurnXO = 'O';
         }
-        startAIMove(grid, XO, "HARD", i);
+        startAIMove(grid, currentTurnXO, "HARD");
         printGrid(grid);
     }
 }
